@@ -1,0 +1,57 @@
+---
+title: "Análisis de mtcars"
+author: Karla Rojas y Miryam Dominguez
+output: 
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Antecedentes 
+
+La base de datos **mtcars**, describe el consumo de vehículos en el año 1947 en US. La tabla describe 32 distintos vehículos  cuyos modelos varian en los años1973-74.
+Las variables son:
+
+
+| **Nombre Variable**| **Definición**               |
+| :----------------: | :--------------------------: | 
+| mpg                | Millas/$ galones             |  
+| cyl                | Número de Cilindros          |
+| disp               | Desplazamiento               |
+| hp                 | Caballos de Fuerza           |
+| drat               | Eje trasero                  |
+| wt                 | Peso (1000 lbs)              |
+| qsec               | 1/4 millas tiempo            |
+| vs                 | Motor (o=V  1= recto)        |
+| am                 | Transmisión (0=auto 1=manual)|
+| gear               | Número de Marchas            |
+| carb               | Número de Carburadores       |
+
+Nuestra pregunta de análisis es entender cual de las distintas variables de la base de datos, se correlaciona mas con **mpg (Millas/dólar)**. 
+
+```{r mtcars, echo=F}
+plot(mtcars)
+```
+
+Al poder ver claramente que los hp tiene una relacion entre ambas variables.
+
+```{r relacion, echo=F}
+reg1<-lm(mtcars$mpg~mtcars$hp)
+plot(mtcars$hp, mtcars$mpg, ylab="Millas por Galón", xlab="Caballos de fuerza", main="MPG VS HP")
+abline(reg1, col="green")
+```
+
+Es notorio que la relacion entre las milla por hora y los caballos de fuerza es lineal decreciente.
+
+```{r tabla, echo=F}
+library(rpivotTable)
+data(mtcars)
+rpivotTable(mtcars,rows="gear", cols=c("cyl","carb"),width="100%", height="400px")
+```
+
+
